@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita | Veterinaria</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Agendar Cita</h1>
+        <nav>
+            <a href="index.htm">Inicio</a>
+            <a href="servicios.html">Servicios</a>
+            <a href="cita.html">Agendar Cita</a>
+        </nav>
+    </header>
+
+    <section class="formulario-cita">
+        <h2>Reserva una cita para tu mascota 🐶🐱</h2>
+        <form id="formCita">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                title="Solo se permiten letras y espacios">
+
+            <label for="Apellido">Apellido</label>
+            <input type="text" id="apellido" name=" apellido" required pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+"
+                title="Solo se permiten letras y espacios">
+
+            <label for="correo">Correo Electrónico:</label>
+            <input type="email" id="correo" name="correo" required>
+
+            <label for="fecha">Fecha de la cita:</label>
+            <input type="date" id="fecha" name="fecha" required>
+
+
+            <label for="motivo">Motivo de la Cita:</label>
+            <select id="motivo" name="motivo" onchange="mostrarOtro()">
+                <option value="Consulta general">Consulta general</option>
+                <option value="Vacunación">Vacunación</option>
+                <option value="Desparasitación">Desparasitación</option>
+                <option value="Urgencia médica">Urgencia médica</option>
+                <option value="Examen de laboratorio">Examen de laboratorio</option>
+                <option value="Otro">Otro</option>
+            </select>
+
+            <div id="campoOtro" style="display: none;">
+                <label for="otroMotivo">Describe el motivo:</label>
+                <input type="text" id="otroMotivo" name="otroMotivo">
+            </div>
+
+            <label for="mensaje">Comentarios adicionales:</label>
+            <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+
+            <button type="submit">Agendar Cita</button>
+        </form>
+    </section>
+
+    <script>
+        // Mostrar campo de texto si elige "Otro"
+        function mostrarOtro() {
+            var motivo = document.getElementById("motivo").value;
+            var campoOtro = document.getElementById("campoOtro");
+
+            if (motivo === "Otro") {
+                campoOtro.style.display = "block";
+            } else {
+                campoOtro.style.display = "none";
+            }
+        }
+
+        // Validación del formulario antes de enviarlo
+        document.getElementById("formCita").addEventListener("submit", function (event) {
+            event.preventDefault(); // Evita que el formulario se envíe automáticamente
+
+            var nombre = document.getElementById("nombre").value.trim();
+            var correo = document.getElementById("correo").value.trim();
+            var fecha = document.getElementById("fecha").value;
+            var motivo = document.getElementById("motivo").value;
+            var otroMotivo = document.getElementById("otroMotivo").value.trim();
+
+            // Verificar si los campos obligatorios están vacíos
+            if (nombre === "" || correo === "" || fecha === "") {
+                alert("Por favor, completa todos los campos obligatorios.");
+                return;
+            }
+
+            // Si el motivo es "Otro", asegurarse de que esté descrito
+            if (motivo === "Otro" && otroMotivo === "") {
+                alert("Por favor, describe el motivo de la cita.");
+                return;
+
+            }
+
+           
+            // Mostrar confirmación antes de enviar
+            var confirmacion = confirm("¿Estás seguro de que deseas agendar esta cita?");
+            if (confirmacion) {
+                alert("¡Cita agendada exitosamente! 🐾 Te contactaremos pronto.");
+                this.submit(); // Envía el formulario
+
+
+
+
+
+            }
+        });
+    </script>
+
+</body>
+
+</html>
